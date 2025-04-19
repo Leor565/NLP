@@ -1,0 +1,242 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Mar 21 22:09:10 2025
+
+@author: leor7
+"""
+
+import json
+
+# New intents to be added
+new_intents = [
+    {
+        "tag": "order_coffee",
+        "patterns": [
+            "I want a coffee",
+            "Can I get a coffee?",
+            "Order coffee",
+            "I need a cup of coffee"
+        ],
+        "responses": [
+            "Sure! What kind of coffee would you like?",
+            "Of course, which coffee do you prefer?",
+            "Absolutely, let's get you a coffee."
+        ]
+    },
+    {
+        "tag": "coffee_type",
+        "patterns": [
+            "I want an espresso.",
+            "Give me a cappuccino.",
+            "Can I have a latte?",
+            "I want a black coffee."
+        ],
+        "responses": [
+            "Would you like it hot or iced?",
+            "Do you want sugar or milk with that?",
+            "Do you want it small, medium, or large?"
+        ]
+    },
+    {
+        "tag": "order_size",
+        "patterns": [
+            "I'd like a medium.",
+            "Can I get a small coffee?",
+            "I want a large one.",
+            "Give me a grande size."
+        ],
+        "responses": [
+            "Got it! Medium coffee coming up.",
+            "Okay! A small coffee will be ready for you.",
+            "A large coffee coming right up!"
+        ]
+    },
+    {
+        "tag": "add_milk",
+        "patterns": [
+            "Can I add milk?",
+            "I want milk with my coffee.",
+            "Can you put some milk in it?",
+            "Add some milk to that coffee."
+        ],
+        "responses": [
+            "Would you like whole milk, almond milk, or oat milk?",
+            "What type of milk do you prefer?",
+            "I'll add milk. What type would you like?"
+        ]
+    },
+    {
+        "tag": "add_sugar",
+        "patterns": [
+            "I want sugar in my coffee.",
+            "Can you add some sugar?",
+            "Put sugar in it.",
+            "I'd like it sweetened."
+        ],
+        "responses": [
+            "How many spoons of sugar would you like?",
+            "Would you like it sweet or just a little sugar?",
+            "How sweet do you want your coffee?"
+        ]
+    },
+    {
+        "tag": "order_confirmation",
+        "patterns": [
+            "Is my order confirmed?",
+            "Did you get my order?",
+            "Is everything set for my coffee?",
+            "Can you confirm my coffee order?"
+        ],
+        "responses": [
+            "Your order is confirmed. It will be ready shortly.",
+            "Yes, your coffee is on the way!",
+            "Order confirmed! Your coffee will be ready soon."
+        ]
+    },
+    {
+        "tag": "order_time",
+        "patterns": [
+            "How long will my order take?",
+            "When will my coffee be ready?",
+            "Can you tell me the waiting time?",
+            "How long does it take for a coffee to be ready?"
+        ],
+        "responses": [
+            "It will take about 5 minutes.",
+            "Your coffee will be ready in 5-10 minutes.",
+            "It should be ready shortly!"
+        ]
+    },
+    {
+        "tag": "customization_request",
+        "patterns": [
+            "Can I customize my coffee?",
+            "Can I add extra flavor?",
+            "Can I make it extra hot?",
+            "I want to make some changes to my order."
+        ],
+        "responses": [
+            "Of course! What would you like to customize?",
+            "What kind of customization would you like?",
+            "Sure! Tell me how you’d like it customized."
+        ]
+    },
+    {
+        "tag": "payment",
+        "patterns": [
+            "How can I pay for my coffee?",
+            "What payment options do you have?",
+            "Can I pay with a card?",
+            "Do you accept mobile payments?"
+        ],
+        "responses": [
+            "We accept cash, card, and mobile payments.",
+            "You can pay with your card or mobile payment.",
+            "We take all major credit cards and mobile payments."
+        ]
+    },
+    {
+        "tag": "add_ice",
+        "patterns": [
+            "Can I get some ice in my coffee?",
+            "Add ice to my coffee.",
+            "I want an iced coffee.",
+            "Can you make it cold?"
+        ],
+        "responses": [
+            "Would you like a full iced coffee or just a little ice?",
+            "Sure! Do you want it extra cold?",
+            "I'll add ice. Is that okay?"
+        ]
+    },
+    {
+        "tag": "decaf_option",
+        "patterns": [
+            "Do you have decaf coffee?",
+            "Can I get a decaf coffee?",
+            "Is there decaf coffee available?",
+            "I want decaf, please."
+        ],
+        "responses": [
+            "Yes, we have decaf coffee. Would you like that?",
+            "Sure! Would you like it with milk or black?",
+            "We have decaf! What type would you prefer?"
+        ]
+    },
+    {
+        "tag": "order_history",
+        "patterns": [
+            "What did I order last time?",
+            "Can I see my previous order?",
+            "What was my last coffee order?",
+            "Show me my past order."
+        ],
+        "responses": [
+            "Let me fetch your last order for you.",
+            "Here’s your previous order.",
+            "I’ll pull up your last coffee order."
+        ]
+    },
+    {
+        "tag": "gift_order",
+        "patterns": [
+            "Can I gift a coffee?",
+            "I want to send a coffee as a gift.",
+            "Can you send a coffee to someone?",
+            "I want to order a coffee for a friend."
+        ],
+        "responses": [
+            "Sure! What type of coffee would you like to send?",
+            "Who would you like to send the coffee to?",
+            "I’ll arrange that. What coffee are you gifting?"
+        ]
+    },
+    {
+        "tag": "coffee_allergy",
+        "patterns": [
+            "Do you have any allergen-free options?",
+            "Is your coffee safe for allergies?",
+            "I have allergies. Can you make it allergy-free?",
+            "Does your coffee contain nuts?"
+        ],
+        "responses": [
+            "We offer allergy-friendly options. Let me know your specific needs.",
+            "We can make allergen-free coffee. What do you need?",
+            "We ensure safety for allergies. What are your restrictions?"
+        ]
+    },
+    {
+    "tag": "cancel_order",
+    "patterns": [
+        "I want to cancel my order.",
+        "Can I cancel my coffee?",
+        "Cancel my coffee order.",
+        "I changed my mind about the coffee."
+    ],
+    "responses": [
+        "Your order has been canceled.",
+        "Okay! I’ve canceled your coffee order.",
+        "Your coffee order is now canceled."
+    ]
+}
+
+]
+
+# File path for the intents file
+file_path = r"C:\NLP\Assignments\Assignment 2\leor_intents.json"
+
+# Load existing intents
+try:
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+except FileNotFoundError:
+    data = {"intents": []}
+
+# Append new intents to the existing data
+data["intents"].extend(new_intents)
+
+# Save the updated intents back to the file
+with open(file_path, 'w') as f:
+    json.dump(data, f, indent=4)
+
+print("New intents added successfully!")
